@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>GPT-3 Output</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+      body {
+        background-color: #333;
+        color: white;
+        font-weight: bold;
+        font-size:16px;
+        font-family: Arial, sans-serif;
+      }
+      table {
+        border-collapse: collapse;
+        width: 100%;
+        text-align: center;
+        border: 3px solid white; /* Add a border and set the color to white */
+      }
+      th,
+      td {
+        padding: 12px;
+        text-align: center;
+        border-bottom: 2px solid #fff;
+      }
+      tr:hover {
+        background-color: navy; /* Change hover color to navy blue */
+      }
+      th {
+        background-color: #4CAF50;
+        color: white;
+      }
+      h1 {
+        text-align: center;
+        font-size: 40px;
+        font-weight: bold;
+        color: white;
+        background-color: #2d2d2d;
+        padding: 20px;
+      }
+      td:not(:last-child)::after {
+        padding-left: 10px;
+        padding-right: 10px;
+      }
+      td:nth-child(2) {
+        text-align: left;
+      }
+      td, th {
+        border: 2px solid black;
+      }
+      table td {
+        font-size: 18px;
+      }
+      table th {
+        font-size: 24px;
+      }
+      table td, table th {
+        border: 1px solid #fff;
+      }
+      #home-button {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        background-color: white;
+        color: red;
+        padding: 10px 20px;
+        font-size: 16px;
+        font-weight: bold;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+      #home-button:hover {
+        background-color: #39FF14;
+      }
+    </style>
+    
+  </head>
+  <body>
+    <button id="home-button" onclick="window.location.href='/'">Home</button>
+    <h1>GPT-3 Prompt Generator Output</h1>
+    <div id="output"></div>
+    <script>
+        var outputDiv = document.getElementById('output');
+        var promptScores = {{ prompt_scores_sorted|tojson }};
+        var promptTable = "<table><thead><tr><th>Rank</th><th>Generated Prompt</th><th>Confidence Score</th></tr></thead><tbody>";
+          for (var i = 0; i < promptScores.length; i++) {
+            promptTable += "<tr><td>" + (i+1) + "</td><td style='text-align: left'>" + promptScores[i][0] + "</td><td>" + promptScores[i][1].toFixed(4) + "</td></tr>";
+          }          
+        promptTable += "</tbody></table>";
+        outputDiv.innerHTML = promptTable;        
+    </script>
+  </body>
+</html>
